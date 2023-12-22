@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.RegisterApiServices();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
