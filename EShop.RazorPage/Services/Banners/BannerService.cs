@@ -1,4 +1,5 @@
-﻿using EShop.RazorPage.Models;
+﻿using Common.Application.Validation.CustomValidation.IFormFile;
+using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Banners;
 
 namespace EShop.RazorPage.Services.Banners;
@@ -26,7 +27,8 @@ public class BannerService : IBannerService
     {
         var formData = new MultipartFormDataContent();
         formData.Add(new StringContent(command.Link), "Link");
-        formData.Add(new StreamContent(command.ImageFile.OpenReadStream()), "ImageFile", command.ImageFile.FileName);
+        if (command.ImageFile != null && command.ImageFile.IsImage())
+            formData.Add(new StreamContent(command.ImageFile.OpenReadStream()), "ImageFile", command.ImageFile.FileName);
         formData.Add(new StringContent(command.Position.ToString()), "Position");
         formData.Add(new StringContent(command.Id.ToString()), "Id");
 
