@@ -1,5 +1,18 @@
-﻿namespace EShop.RazorPage.Services.Orders;
+﻿using EShop.RazorPage.Models.Orders.Command;
+using EShop.RazorPage.Models;
+using EShop.RazorPage.Models.Orders;
+
+namespace EShop.RazorPage.Services.Orders;
 public interface IOrderService
 {
+    Task<ApiResult> AddOrderItem(AddOrderItemCommand command);
+    Task<ApiResult> CheckoutOrder(CheckOutOrderCommand command);
+    Task<ApiResult> IncreaseOrderItem(IncreaseOrderItemCountCommand command);
+    Task<ApiResult> DecreaseOrderItem(DecreaseOrderItemCountCommand command);
+    Task<ApiResult> DeleteOrderItem(DeleteOrderItemCommand command);
+
+    Task<OrderDto?> GetOrderById(long orderId);
+    Task<OrderDto?> GetCurrentOrder();
+    Task<OrderFilterResult> GetOrders(OrderFilterParams filterParams);
 }
 
