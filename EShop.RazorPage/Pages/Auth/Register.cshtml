@@ -2,6 +2,7 @@
 @model EShop.RazorPage.Pages.Auth.RegisterModel
 @{
     Layout = "Shared/Layouts/_AuthLayout";
+    ViewData["Title"] = " ثبت نام در سایت";
 }
 <div class="auth-form shadow-around">
     <div class="site-logo">
@@ -12,20 +13,30 @@
     <div class="auth-form-title">
         ثبت نام در سایت
     </div>
-    <form action="#">
+    <form method="post">
         <div class="form-element-row">
-            <label for="phone-number" class="label-element">شماره موبایل</label>
+            <label for="phone-number" class="label-element" asp-for="PhoneNumber"></label>
             <div class="form-element-with-icon">
-                <input type="text" class="input-element" id="phone-number">
+                <input type="text" asp-for="PhoneNumber" class="input-element">
                 <i class="fad fa-mobile-alt"></i>
             </div>
+            <span asp-validation-for="PhoneNumber"></span>
         </div>
         <div class="form-element-row">
-            <label for="password" class="label-element">کلمه عبور</label>
+            <label for="password" class="label-element" asp-for="Password"></label>
             <div class="form-element-with-icon">
-                <input type="text" class="input-element" id="password">
+                <input type="password" asp-for="Password" class="input-element">
                 <i class="fad fa-key-skeleton"></i>
             </div>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-element-row">
+            <label for="password" class="label-element" asp-for="ConfirmPassword"></label>
+            <div class="form-element-with-icon">
+                <input type="password" asp-for="ConfirmPassword" class="input-element">
+                <i class="fad fa-key-skeleton"></i>
+            </div>
+            <span asp-validation-for="ConfirmPassword"></span>
         </div>
         <div class="form-element-row">
             <label class="container-checkbox">
@@ -46,7 +57,7 @@
 
     </form>
     <div class="auth-form-footer">
-        <span>قبلا در همتا ثبت‌نام کرده‌اید؟</span>
-        <a href="#" class="link--with-border-bottom">وارد شوید</a>
+        <span>قبلا ثبت‌نام کرده‌اید؟</span>
+        <a asp-page="Login" class="link--with-border-bottom">وارد شوید</a>
     </div>
 </div>
