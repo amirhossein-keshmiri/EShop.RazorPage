@@ -6,7 +6,7 @@
 }
 <div class="auth-form shadow-around">
     <div class="site-logo">
-        <a href="#">
+        <a href="/">
             <img src="/assets/images/logo.png" alt="logo">
         </a>
     </div>
@@ -14,35 +14,15 @@
         ثبت نام در سایت
     </div>
     <form method="post">
-        <div class="form-element-row">
-            <label for="phone-number" class="label-element" asp-for="PhoneNumber"></label>
-            <div class="form-element-with-icon">
-                <input type="text" asp-for="PhoneNumber" class="input-element">
-                <i class="fad fa-mobile-alt"></i>
-            </div>
-            <span asp-validation-for="PhoneNumber"></span>
-        </div>
-        <div class="form-element-row">
-            <label for="password" class="label-element" asp-for="Password"></label>
-            <div class="form-element-with-icon">
-                <input type="password" asp-for="Password" class="input-element">
-                <i class="fad fa-key-skeleton"></i>
-            </div>
-            <span asp-validation-for="Password"></span>
-        </div>
-        <div class="form-element-row">
-            <label for="password" class="label-element" asp-for="ConfirmPassword"></label>
-            <div class="form-element-with-icon">
-                <input type="password" asp-for="ConfirmPassword" class="input-element">
-                <i class="fad fa-key-skeleton"></i>
-            </div>
-            <span asp-validation-for="ConfirmPassword"></span>
-        </div>
+        @Html.EditorFor(m=>m.PhoneNumber)
+        @Html.EditorFor(m=>m.Password)
+        @Html.EditorFor(m=>m.ConfirmPassword)
+
         <div class="form-element-row">
             <label class="container-checkbox">
                 <a href="#" class="link--with-border-bottom">حریم خصوصی</a> و <a href="#"
                                                                                  class="link--with-border-bottom">شرایط و قوانین</a> استفاده از سرویس های سایت
-                همتا را مطالعه نموده
+                سایت را مطالعه نموده
                 و با کلیه موارد آن موافقم.
                 <input type="checkbox" checked="checked">
                 <span class="checkmark"></span>
@@ -51,7 +31,7 @@
         <div class="form-element-row text-left">
             <button class="btn-element btn-success-element">
                 <i class="fad fa-user-edit"></i>
-                ثبت نام در همتا
+                ثبت نام در سایت
             </button>
         </div>
 

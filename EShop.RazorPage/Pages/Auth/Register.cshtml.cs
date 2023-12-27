@@ -11,7 +11,7 @@ namespace EShop.RazorPage.Pages.Auth
     [ValidateAntiForgeryToken]
     public class RegisterModel : PageModel
     {
-        private IAuthService _authService;
+        private readonly IAuthService _authService;
 
         public RegisterModel(IAuthService authService)
         {
