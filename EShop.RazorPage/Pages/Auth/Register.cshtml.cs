@@ -1,15 +1,14 @@
-﻿using EShop.RazorPage.Models.Auth;
+﻿using EShop.RazorPage.Infrastructure.RazorUtils;
+using EShop.RazorPage.Models.Auth;
 using EShop.RazorPage.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace EShop.RazorPage.Pages.Auth
 {
     [BindProperties]
     [ValidateAntiForgeryToken]
-    public class RegisterModel : PageModel
+    public class RegisterModel : BaseRazorPage
     {
         private readonly IAuthService _authService;
 
@@ -45,12 +44,8 @@ namespace EShop.RazorPage.Pages.Auth
                 Password = Password,
                 ConfirmPassword = ConfirmPassword
             });
-            if(result.IsSuccess == false)
-            {
-                ModelState.AddModelError(nameof(PhoneNumber), result.MetaData.Message);
-                return Page();
-            }
-            return RedirectToPage("Login");
+
+            return RedirectAndShowAlert(result, RedirectToPage("Login"));
         }
     }
 }
