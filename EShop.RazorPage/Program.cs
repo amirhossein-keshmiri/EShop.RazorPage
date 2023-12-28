@@ -1,4 +1,7 @@
 using EShop.RazorPage.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,26 @@ builder.Services.AddRazorPages()
 
 builder.Services.RegisterApiServices();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(option =>
+{
+    option.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidAudience = builder.Configuration["JwtConfig:Audience"],
+        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+        IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:SignInKey"])),
+        ValidateLifetime = true,
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateIssuerSigningKey = true
+    };
+});
 
 var app = builder.Build();
 
@@ -19,11 +42,23 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//Take Token From Cookie Request & Append It To Headers For Sending To The Server
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Cookies["token"]?.ToString();
+    if (string.IsNullOrWhiteSpace(token) == false)
+    {
+        context.Request.Headers.Append("Authorization", $"Bearer {token}");
+    }
+    await next();
+});
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
