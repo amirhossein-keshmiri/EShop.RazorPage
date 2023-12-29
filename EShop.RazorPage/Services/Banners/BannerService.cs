@@ -1,4 +1,4 @@
-﻿using Common.Application.Validation.CustomValidation.IFormFile;
+﻿using EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Banners;
 

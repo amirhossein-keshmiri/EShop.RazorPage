@@ -2,7 +2,7 @@
 using System.Drawing;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace Common.Application.Validation.CustomValidation.IFormFile
+namespace EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile
 {
     public class FileImageAttribute : ValidationAttribute, IClientModelValidator
     {
