@@ -50,6 +50,12 @@ public class UserService : IUserService
         return await result.Content.ReadFromJsonAsync<ApiResult>();
     }
 
+    public async Task<ApiResult> ChangePassword(ChangePasswordCommand command)
+    {
+        var result = await _client.PutAsJsonAsync($"{ModuleName}/ChangePassword", command);
+        return await result.Content.ReadFromJsonAsync<ApiResult>();
+    }
+
     public async Task<UserDto?> GetCurrentUser()
     {
         var result = await _client.GetFromJsonAsync<ApiResult<UserDto?>>($"{ModuleName}/current");
@@ -69,5 +75,6 @@ public class UserService : IUserService
         var result = await _client.GetFromJsonAsync<ApiResult<UserFilterResult>>(url);
         return result.Data; throw new NotImplementedException();
     }
+
 }
 
