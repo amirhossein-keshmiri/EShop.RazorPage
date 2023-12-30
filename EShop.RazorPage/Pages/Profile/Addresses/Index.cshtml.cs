@@ -72,5 +72,11 @@ public class IndexModel : BaseRazorPage
             return result;
         }, true);
     }
+
+    public async Task<IActionResult> OnPostAsync(long addressId)
+    {
+        var result = await _userAddress.DeleteAddress(addressId);
+        return RedirectAndShowAlert(result, RedirectToPage("Index"), RedirectToPage("Index"));
+    }
 }
 
