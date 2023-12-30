@@ -2,7 +2,7 @@
 public class EditUserAddressCommand
 {
     public long Id { get; set; }
-    public string Shire { get; set; }
+    public string State { get; set; }
     public string City { get; set; }
     public string PostalCode { get; set; }
     public string PostalAddress { get; set; }

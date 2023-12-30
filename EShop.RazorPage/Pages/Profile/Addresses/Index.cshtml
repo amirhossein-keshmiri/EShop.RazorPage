@@ -26,7 +26,7 @@
                                        @item.Name @item.Family
                                     </span>
                                     <a href="#" class="link--with-border-bottom edit-address-btn"
-                                       data-toggle="modal" data-target="#editAddressModal">
+                                       onclick="OpenModal('@Url.Page("Index","ShowEditPage",new {addressId = item.Id})','defaultModal','ویرایش آدرس')">
                                         ویرایش
                                         <i class="fa fa-edit"></i>
                                     </a>

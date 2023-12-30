@@ -9,6 +9,9 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<CreateUserAddressCommand, CreateUserAddressViewModel>().ReverseMap();
 
+        CreateMap<AddressDto, EditUserAddressViewModel>().ReverseMap();
+
+        CreateMap<EditUserAddressViewModel, EditUserAddressCommand>().ReverseMap();
     }
 }
 

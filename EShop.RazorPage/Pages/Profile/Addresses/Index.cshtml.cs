@@ -48,5 +48,29 @@ public class IndexModel : BaseRazorPage
             return result;
         }, true);
     }
+
+    public async Task<IActionResult> OnGetShowEditPage(long addressId)
+    {
+        return await AjaxTryCatch(async () =>
+        {
+            var address = await _userAddress.GetAddressById(addressId);
+            var model = _mapper.Map<EditUserAddressViewModel>(address);
+            var view = await _renderViewToString.RenderToStringAsync("_Edit", model,
+                PageContext);
+
+            return ApiResult<string>.Success(view);
+        });
+    }
+
+    public async Task<IActionResult> OnPostEditAddress(EditUserAddressViewModel viewModel)
+    {
+        return await AjaxTryCatch(async () =>
+        {
+            var model = _mapper.Map<EditUserAddressCommand>(viewModel);
+            var result = await _userAddress.EditAddress(model);
+
+            return result;
+        }, true);
+    }
 }
 
