@@ -27,6 +27,11 @@ public class UserAddressService : IUserAddressService
         var result = await _client.DeleteAsync($"{ModuleName}/{addressId}");
         return await result.Content.ReadFromJsonAsync<ApiResult>();
     }
+    public async Task<ApiResult> SetActiveAddress(long addressId)
+    {
+        var result = await _client.PutAsync($"{ModuleName}/SetActiveAddress/{addressId}", null);
+        return await result.Content.ReadFromJsonAsync<ApiResult>();
+    }
 
     public async Task<AddressDto?> GetAddressById(long id)
     {

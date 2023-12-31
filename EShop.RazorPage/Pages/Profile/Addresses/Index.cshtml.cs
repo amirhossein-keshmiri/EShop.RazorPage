@@ -78,5 +78,14 @@ public class IndexModel : BaseRazorPage
         var result = await _userAddress.DeleteAddress(addressId);
         return RedirectAndShowAlert(result, RedirectToPage("Index"), RedirectToPage("Index"));
     }
+
+    public async Task<IActionResult> OnGetSetActiveAddress(long addressId)
+    {
+        return await AjaxTryCatch(async () =>
+        {
+            var result = await _userAddress.SetActiveAddress(addressId);
+            return result;
+        }, true);
+    }
 }
 
