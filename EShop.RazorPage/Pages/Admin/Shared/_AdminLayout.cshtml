@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="fa" data-textdirection="rtl" dir="rtl">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>@ViewData["title"]</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/assets/images/ico/favicon.ico">
+    <meta name="theme-color" content="#5A8DEE">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/extensions/swiper.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/semi-dark-layout.css">
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/pages/dashboard-ecommerce.css">
+    <!-- END: Page CSS-->
+
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern semi-dark-layout 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
+
+    <!-- BEGIN: Header-->
+    <partial name="Admin/Shared/_Header" />
+ <!-- END: Header-->
+    <!-- BEGIN: Main Menu-->
+    <partial name="Admin/Shared/_SideBar" />
+    <!-- END: Main Menu-->
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- demo chat-->
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="/admin/assets/vendors/js/vendors.min.js"></script>
+    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
+    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/admin/assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="/admin/assets/vendors/js/extensions/swiper.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/admin/assets/js/scripts/configs/vertical-menu-dark.js"></script>
+    <script src="/admin/assets/js/core/app-menu.js"></script>
+    <script src="/admin/assets/js/core/app.js"></script>
+    <script src="/admin/assets/js/scripts/components.js"></script>
+    <script src="/admin/assets/js/scripts/footer.js"></script>
+    <script src="/admin/assets/js/scripts/customizer.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="/admin/assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+    @await RenderSectionAsync("Scripts",false)
+</body>
+<!-- END: Body-->
+</html>
