@@ -1,16 +1,31 @@
 using EShop.RazorPage.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages()
-    .AddRazorRuntimeCompilation();
+
 
 builder.Services.RegisterApiServices();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("Account", builder =>
+    {
+        builder.RequireAuthenticatedUser();
+    });
+});
+
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation()
+    .AddRazorPagesOptions(options =>
+    {
+        options.Conventions.AuthorizeFolder("/Profile", "Account");
+    });
 
 builder.Services.AddAuthentication(option =>
 {
@@ -58,6 +73,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.Use(async (context, next) =>
+{
+    await next();
+    var status = context.Response.StatusCode;
+    if (status == 401)
+    {
+        var path = context.Request.Path;
+        context.Response.Redirect($"/auth/login?redirectTo={path}");
+    }
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -28,11 +28,13 @@ namespace EShop.RazorPage.Pages.Auth
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        public string RedirectTo { get; set; }
         public IActionResult OnGet(string redirectTo)
         {
             if (User.Identity.IsAuthenticated)
                 return Redirect("/");
 
+            RedirectTo = redirectTo;
             return Page();
         }
 
@@ -62,6 +64,11 @@ namespace EShop.RazorPage.Pages.Auth
                 HttpOnly = true,
                 Expires = DateTimeOffset.Now.AddDays(10)
             });
+
+            if (string.IsNullOrWhiteSpace(RedirectTo) == false)
+            {
+                return LocalRedirect(RedirectTo);
+            }
 
             return Redirect("/");
         }

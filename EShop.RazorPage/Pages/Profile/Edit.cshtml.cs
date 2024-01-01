@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 namespace EShop.RazorPage.Pages.Profile;
 
 [BindProperties]
-[Authorize]
 public class EditModel : BaseRazorPage
 {
     private readonly IUserService _userService;

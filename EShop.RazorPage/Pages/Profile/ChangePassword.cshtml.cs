@@ -8,7 +8,6 @@ using System.ComponentModel.DataAnnotations;
 namespace EShop.RazorPage.Pages.Profile;
 
 [BindProperties]
-[Authorize]
 public class ChangePasswordModel : BaseRazorPage
 {
     private readonly IUserService _userService;
