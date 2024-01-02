@@ -42,7 +42,9 @@
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="content-wrapper">
+            <div class="content-body">
             @RenderBody()
+            </div>
         </div>
     </div>
     <!-- END: Content-->
@@ -67,9 +69,11 @@
     <script src="/admin/assets/js/scripts/components.js"></script>
     <script src="/admin/assets/js/scripts/footer.js"></script>
     <script src="/admin/assets/js/scripts/customizer.js"></script>
+    <script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
+    <script src="/global/global.js"></script>
     <!-- END: Theme JS-->
     <!-- BEGIN: Page JS-->
-    <script src="/admin/assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    
     <!-- END: Page JS-->
     @await RenderSectionAsync("Scripts",false)
 </body>
