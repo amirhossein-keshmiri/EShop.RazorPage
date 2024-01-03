@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile;
+using System.ComponentModel.DataAnnotations;
 
 namespace EShop.RazorPage.Models.Banners;
 public class EditBannerCommand
@@ -12,7 +13,7 @@ public class EditBannerCommand
     public BannerPosition Position { get; set; }
 
     [Display(Name = "عکس")]
-    //[FileImage(ErrorMessage = "عکس نامعتبر است")]
+    [FileImage(ErrorMessage = "عکس نامعتبر است")]
     public IFormFile? ImageFile { get; set; }
 }
 
