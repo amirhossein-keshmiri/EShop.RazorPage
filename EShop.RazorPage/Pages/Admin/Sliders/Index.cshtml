@@ -1,7 +1,8 @@
-﻿@page
+﻿@page "{handler?}"
 @using EShop.RazorPage.Infrastructure;
 @model EShop.RazorPage.Pages.Admin.Sliders.IndexModel
 @{
+    ViewData["title"] = "مدیریت اسلایدرها";
 }
 
 <h3>مدیریت اسلایدرها</h3>
@@ -28,6 +29,9 @@
                     <td>
                         <a asp-page="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id">ویرایش</a>
 
+                        <delete-item url="@Url.Page("Index", "DeleteSlider", new {sliderId = item.Id})">
+                            حذف
+                        </delete-item>
                     </td>
                 </tr>
 

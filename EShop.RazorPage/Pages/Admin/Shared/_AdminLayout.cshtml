@@ -72,9 +72,10 @@
     <script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
     <script src="/global/global.js"></script>
     <!-- END: Theme JS-->
-    <!-- BEGIN: Page JS-->
-    
-    <!-- END: Page JS-->
+    <div id="ajax-token">
+        @Html.AntiForgeryToken()
+    </div>
+
     @await RenderSectionAsync("Scripts",false)
 </body>
 <!-- END: Body-->

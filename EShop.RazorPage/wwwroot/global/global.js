@@ -69,12 +69,14 @@ function Warning(Title, description, isReload = false) {
     });
 }
 
+//It Used in TagHelper
 function DeleteItem(url, description) {
     Swal.fire({
         title: "آیا از حذف اطمینان دارید ؟",
         text: description,
         icon: "warning",
-        confirmButtonText: "بله ، مطمعا هستم",
+        confirmButtonText: "بله ، مطمعاً هستم",
+        confirmButtonColor: "#FF0000",
         cancelButtonText: "خیر",
         showCancelButton: true,
     }).then((result) => {
@@ -103,6 +105,7 @@ function DeleteItem(url, description) {
         }
     });
 }
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
