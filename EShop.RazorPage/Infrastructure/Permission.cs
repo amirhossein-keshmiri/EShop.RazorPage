@@ -1,9 +1,6 @@
-﻿namespace EShop.RazorPage.Models.Roles;
-public class RoleDto : BaseDto
-{
-    public string Title { get; set; }
-    public List<Permission> Permissions { get; set; }
-}
+﻿namespace EShop.RazorPage.Infrastructure;
+
+//UnUsed Because it Created in Models RoleDto
 public enum Permission
 {
     PanelAdmin,
@@ -53,6 +50,5 @@ public enum Permission
     Order_Management,
     Role_Management,
     Comment_Management,
-
 }
 

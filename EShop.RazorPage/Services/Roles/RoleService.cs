@@ -23,6 +23,11 @@ public class RoleService : IRoleService
         return await result.Content.ReadFromJsonAsync<ApiResult>();
     }
 
+    public async Task<ApiResult> DeleteRole(long roleId)
+    {
+        var result = await _client.DeleteAsync($"{ModuleName}/{roleId}");
+        return await result.Content.ReadFromJsonAsync<ApiResult>();
+    }
     public async Task<RoleDto> GetRoleById(long roleId)
     {
         var result = await _client.GetFromJsonAsync<ApiResult<RoleDto?>>($"{ModuleName}/{roleId}");
