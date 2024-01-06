@@ -241,10 +241,10 @@ function loadCkeditor4() {
     if (!document.getElementById("ckeditor4"))
         return;
 
-    $("body").prepend(`<script src="/admin/ckeditor4/ckeditor/ckeditor.js"></script>`);
+    $("body").prepend(`<script src="/admin/assets/ckeditor4/ckeditor/ckeditor.js"></script>`);
     setTimeout(() => {
         CKEDITOR.replace('ckeditor4', {
-            customConfig: '/admin/ckeditor4/ckeditor/config.js'
+            customConfig: '/admin/assets/ckeditor4/ckeditor/config.js'
         });
     }, 500);
 }

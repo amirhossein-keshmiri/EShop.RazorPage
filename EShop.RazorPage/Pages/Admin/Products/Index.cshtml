@@ -1,9 +1,10 @@
-﻿@page
+﻿@page "{handler?}"
 @using EShop.RazorPage.Infrastructure;
 @using EShop.RazorPage.Infrastructure.Utils;
 @model EShop.RazorPage.Pages.Admin.Products.IndexModel
 @{
     ViewData["title"] = "مدیریت محصولات";
+    ViewData["selected"] = "products_product";
 }
 <form class="card shadow-lg " method="get">
     <div class="card-header text-left">
