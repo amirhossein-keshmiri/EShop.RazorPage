@@ -1,4 +1,6 @@
-﻿
+﻿﻿@{
+    var selected = ViewData["selected"]?.ToString() ?? "";
+}
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
@@ -14,27 +16,73 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-            <li class=" nav-item">
-                <a href="../../html/vertical-menu-template-semi-dark/index.html"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">داشبورد</span><span class="badge bg-rgba-danger text-danger badge-pill badge-round float-right mr-2">2</span></a>
-                <ul class="menu-content">
-                    <li class="active">
-                        <a href="dashboard-ecommerce.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">تجارت الکترونیک</span></a>
-                    </li>
-                    <li>
-                        <a href="dashboard-analytics.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">آمار تحلیلی</span></a>
-                    </li>
-                </ul>
-            </li>
+
             <li class=" navigation-header">
                 <span>برنامه ها</span>
             </li>
-            <li class=" nav-item">
-                <a href="app-file-manager.html"><i class="menu-livicon" data-icon="save"></i><span class="menu-title" data-i18n="File Manager">مدیریت فایل</span></a>
+            <li class="nav-item @(selected=="index"?"active":null)">
+                <a href="/admin">
+                    <i class="menu-livicon" data-icon="desktop"></i>
+                    <span class="menu-title" data-i18n="File Manager">داشبورد</span></a>
             </li>
 
-
-            <li class="disabled nav-item">
-                <a href="#"><i class="menu-livicon" data-icon="morph-preview"></i><span class="menu-title" data-i18n="Disabled Menu">گزینه غیرفعال</span></a>
+            <li class="nav-item ">
+                <a href="javascript:void(0)">
+                    <i class="menu-livicon" data-icon="Dashboard"></i>
+                    <span class="menu-title" data-i18n="Dashboard">مدیریت محصولات</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="@(selected=="products_product"?"active":null)">
+                        <a href="/admin/products">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="eCommerce">محصولات</span>
+                        </a>
+                    </li>
+                    <li class="@(selected=="products_categories"?"active":null)">
+                        <a href="/admin/categories">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="Analytics">دسته بندی ها</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item @(selected=="orders"?"active":null)">
+                <a href="/admin/orders">
+                    <i class="menu-livicon" data-icon="box"></i>
+                    <span class="menu-title" data-i18n="File Manager">مدیریت سفارشات</span>
+                </a>
+            </li>
+            <li class="nav-item @(selected=="banners"?"active":null)">
+                <a href="/admin/banners">
+                    <i class="menu-livicon" data-icon="box"></i>
+                    <span class="menu-title" data-i18n="File Manager">مدیریت بنر ها</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="javascript:void(0)">
+                    <i class="menu-livicon" data-icon="Users"></i>
+                    <span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="@(selected=="users"?"active":null)">
+                        <a href="/admin/users">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="eCommerce">لیست کاربران</span>
+                        </a>
+                    </li>
+                    <li class="@(selected=="roles"?"active":null)">
+                        <a href="/admin/roles">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="Analytics">نقش ها</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item @(selected=="sliders"?"active":null)">
+                <a href="/admin/sliders">
+                    <i class="menu-livicon" data-icon="adjust"></i>
+                    <span class="menu-title" data-i18n="File Manager">مدیریت  اسلایدر ها</span>
+                </a>
             </li>
         </ul>
     </div>
