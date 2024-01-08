@@ -28,5 +28,9 @@ public class Directories
     {
         return $"{SiteSettings.ServerPath}{ProductGalleryImage}/{imageName}";
     }
+    public static string GetUserAvatar(string imageName)
+    {
+        return $"{SiteSettings.ServerPath}{UserAvatars}/{imageName}";
+    }
 }
 

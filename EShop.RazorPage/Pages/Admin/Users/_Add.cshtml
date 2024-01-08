@@ -1,0 +1,27 @@
+﻿@model EShop.RazorPage.Models.Users.Commands.CreateUserCommand
+<form method="post" data-ajax="true"
+      asp-page="Index" asp-page-handler="CreateUser">
+    <div class="row">
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.Name)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.Family)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.PhoneNumber)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.Email)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.Password)
+        </div>
+        <div class="col-lg-6 mb-3">
+            @Html.EditorFor(f=>f.Gender)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        ذخیره کاربر
+    </button>
+</form>

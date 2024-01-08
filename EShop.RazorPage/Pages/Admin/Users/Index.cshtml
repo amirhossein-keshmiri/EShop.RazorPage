@@ -1,0 +1,85 @@
+﻿@page "{handler?}"
+@using EShop.RazorPage.Infrastructure;
+@using EShop.RazorPage.Infrastructure.Utils;
+@model EShop.RazorPage.Pages.Admin.Users.IndexModel
+@{
+    ViewData["title"] = "مدیریت کاربران";
+    ViewData["selected"] = "users";
+}
+<form class="card shadow-lg " method="get">
+    <div class="card-header text-left">
+        <a asp-page="Index" class="btn btn-danger btn-sm">حذف فیلتر</a>
+        <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>شناسه کاربر</label>
+                <input type="number" asp-for="FilterParams.Id" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>ایمیل </label>
+                <input type="text" asp-for="FilterParams.Email" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>تلفن</label>
+                <input type="text" asp-for="FilterParams.PhoneNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+</form>
+<open-modal modal-title="افزودن کاربر"
+            url="@Url.Page("Index","renderAddPage")">افزودن کاربر</open-modal>
+<div class="card">
+    <div class="card-body table-responsive p-0">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>آواتار</th>
+                    <th>نام و نام خانوادگی</th>
+                    <th>ایمیل</th>
+                    <th>تلفن</th>
+                    <th>تاریخ ثبت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.UserFilterResult.Data)
+                {
+                    <tr>
+                        <td>
+                            @if (item.AvatarName == null || item.AvatarName == "avatar.png")
+                            {
+                                <img src="/assets/images/avatar/avatar.png" width="150px" />
+                            }
+                            else
+                            {
+                                <img src="@Directories.GetUserAvatar(item.AvatarName)" width="150px" />
+
+                            }
+                        </td>
+                        <td>@item.Name @item.Family</td>
+                        <td>@item.Email</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.CreationDate.ToPersianDate()</td>
+                        <td>
+                            <open-modal modal-title="ویرایش"
+                                        class="btn btn-warning btn-sm"
+                                        url="@Url.Page("Index", "renderEditPage", new {userId = item.Id})">
+                                ویرایش
+                            </open-modal>
+
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.UserFilterResult.Data.Any() == false)
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">موردی برای نمایش وجود ندارد</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

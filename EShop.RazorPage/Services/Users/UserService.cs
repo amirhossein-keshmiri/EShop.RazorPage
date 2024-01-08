@@ -1,4 +1,5 @@
 ﻿using EShop.RazorPage.Infrastructure;
+using EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Users;
 using EShop.RazorPage.Models.Users.Commands;
@@ -22,8 +23,10 @@ public class UserService : IUserService
     public async Task<ApiResult> EditUser(EditUserCommand command)
     {
         var formData = new MultipartFormDataContent();
+        formData.Add(new StringContent(command.UserId.ToString()), "UserId");
         formData.Add(new StringContent(command.PhoneNumber), "PhoneNumber");
-        formData.Add(new StreamContent(command.Avatar.OpenReadStream()), "Avatar", command.Avatar.FileName);
+        if (command.Avatar != null && command.Avatar.IsImage())
+            formData.Add(new StreamContent(command.Avatar.OpenReadStream()), "Avatar", command.Avatar.FileName);
         formData.Add(new StringContent(command.Gender.ToString()), "Gender");
         formData.Add(new StringContent(command.Name), "Name");
         formData.Add(new StringContent(command.Family), "Family");
@@ -70,11 +73,14 @@ public class UserService : IUserService
 
     public async Task<UserFilterResult> GetUsersByFilter(UserFilterParams filterParams)
     {
-        var url = filterParams.GenerateBaseFilterUrl(ModuleName) +
-                  $"email={filterParams.Email}&phoneNumber={filterParams.PhoneNumber}&id={filterParams.Id}";
+        //var url = filterParams.GenerateBaseFilterUrl(ModuleName) +
+        //          $"email={filterParams.Email}&phoneNumber={filterParams.PhoneNumber}&id={filterParams.Id}";
+        var url = $"{ModuleName}?pageId={filterParams.PageId}&take={filterParams.Take}" +
+             $"&email={filterParams.Email}&phoneNumber={filterParams.PhoneNumber}";
+        if (filterParams.Id != null)
+            url += $"&Id={filterParams.Id}";
         var result = await _client.GetFromJsonAsync<ApiResult<UserFilterResult>>(url);
         return result.Data; throw new NotImplementedException();
     }
-
 }
 
