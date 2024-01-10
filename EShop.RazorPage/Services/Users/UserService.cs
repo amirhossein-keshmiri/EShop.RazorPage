@@ -1,5 +1,4 @@
-﻿using EShop.RazorPage.Infrastructure;
-using EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile;
+﻿using EShop.RazorPage.Infrastructure.Utils.CustomValidation.IFormFile;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Users;
 using EShop.RazorPage.Models.Users.Commands;
@@ -58,6 +57,11 @@ public class UserService : IUserService
         var result = await _client.PutAsJsonAsync($"{ModuleName}/ChangePassword", command);
         return await result.Content.ReadFromJsonAsync<ApiResult>();
     }
+    public async Task<ApiResult> SetUserRole(SetUserRoleCommand command)
+    {
+        var result = await _client.PostAsJsonAsync($"{ModuleName}/SetUserRole",command);
+        return await result.Content.ReadFromJsonAsync<ApiResult>();
+    }
 
     public async Task<UserDto?> GetCurrentUser()
     {
@@ -82,5 +86,7 @@ public class UserService : IUserService
         var result = await _client.GetFromJsonAsync<ApiResult<UserFilterResult>>(url);
         return result.Data; throw new NotImplementedException();
     }
+
+
 }
 

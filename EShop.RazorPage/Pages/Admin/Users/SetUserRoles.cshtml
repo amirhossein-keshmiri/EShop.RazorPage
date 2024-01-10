@@ -1,0 +1,36 @@
+﻿@page "{userId}"
+@model EShop.RazorPage.Pages.Admin.Users.SetUserRolesModel
+@{
+}
+<form class="card" method="post">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>انتخاب نقش ها</label>
+                <div class="row">
+                    @foreach (var item in Model.Roles)
+                    {
+                        var id = Guid.NewGuid();
+
+                        <div class="col-md-4">
+                            <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                <label class="mb-0 d-block">@item.Title</label>
+                                <input type="checkbox" value="@item.Id" checked="@(Model.UserRoles.Any(f=>f.RoleId==item.Id))" class="custom-control-input" name="roles" id="@id">
+                                <label class="custom-control-label" for="@id">
+                                    <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                    <span class="switch-icon-right"><i class="bx bx-check"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-left">
+
+        <submit />
+        <cancel></cancel>
+
+    </div>
+</form>

@@ -9,6 +9,7 @@ public interface IUserService
     Task<ApiResult> EditUser(EditUserCommand command);
     Task<ApiResult> EditUserCurrent(EditUserCommand command);
     Task<ApiResult> ChangePassword(ChangePasswordCommand command);
+    Task<ApiResult> SetUserRole(SetUserRoleCommand command);
 
     Task<UserDto?> GetUserById(long userId);
     Task<UserDto?> GetCurrentUser();

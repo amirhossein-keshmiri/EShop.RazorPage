@@ -68,7 +68,13 @@
                                         url="@Url.Page("Index", "renderEditPage", new {userId = item.Id})">
                                 ویرایش
                             </open-modal>
+                            <a class="btn btn-sm btn-primary" asp-page="SetUserRoles" asp-route-userId="@item.Id">نقش</a>
 
+                           @* <open-modal modal-title="نقش"
+                                        class="btn btn-primary btn-sm"
+                                        url="@Url.Page("Index", "renderRolePage", new {userId = item.Id})">
+                                نقش
+                            </open-modal>*@
                         </td>
                     </tr>
                 }
