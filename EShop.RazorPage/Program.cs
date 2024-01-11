@@ -1,4 +1,4 @@
-using EShop.RazorPage.Infrastructure;
+﻿using EShop.RazorPage.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -18,6 +18,15 @@ builder.Services.AddAuthorization(option =>
     {
         builder.RequireAuthenticatedUser();
     });
+
+    option.AddPolicy("SellerPanel", builder =>
+    {
+        builder.RequireAuthenticatedUser();
+        builder.RequireAssertion(f => f.User.Claims
+            .Any(c => c.Type == ClaimTypes.Role && (c.Value.Contains("Seller") ||
+                                                     c.Value.Contains("seller") ||
+                                                     c.Value.Contains("فروشنده"))));
+    });
 });
 
 builder.Services.AddRazorPages()
@@ -25,6 +34,7 @@ builder.Services.AddRazorPages()
     .AddRazorPagesOptions(options =>
     {
         options.Conventions.AuthorizeFolder("/Profile", "Account");
+        options.Conventions.AuthorizeFolder("/SellerPanel", "SellerPanel");
     });
 
 builder.Services.AddAuthentication(option =>
