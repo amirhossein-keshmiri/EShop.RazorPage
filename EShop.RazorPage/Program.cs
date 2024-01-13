@@ -12,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterApiServices();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddDistributedMemoryCache();
+
+//For Using Redis Instead Caching in Memory (both are Distributed caching)
+//Just Install Microsoft.Extensions.Caching.StackExchangeRedis package From Nuget
+//and used below Config instead above (Other settings should not be affected)
+//builder.Services.AddDistributedRedisCache(option => option.Configuration="localhost:6379");
+
 builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy("Account", builder =>

@@ -4,6 +4,7 @@ using EShop.RazorPage.Models.Sellers;
 using EShop.RazorPage.Models.Sellers.Commands;
 using EShop.RazorPage.Services.Sellers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace EShop.RazorPage.Pages.SellerPanel.Inventories;
 
@@ -11,11 +12,13 @@ public class IndexModel : BaseRazorPage
 {
     private ISellerService _sellerService;
     private IRenderViewToString _renderViewToString;
-
-    public IndexModel(ISellerService sellerService, IRenderViewToString renderViewToString)
+    private readonly IMemoryCache _memoryCache;
+    public IndexModel(ISellerService sellerService, IRenderViewToString renderViewToString, 
+        IMemoryCache memoryCache)
     {
         _sellerService = sellerService;
         _renderViewToString = renderViewToString;
+        _memoryCache = memoryCache;
     }
 
     public List<InventoryDto> Inventories { get; set; }
@@ -50,6 +53,7 @@ public class IndexModel : BaseRazorPage
 
     public async Task<IActionResult> OnPost(EditSellerInventoryCommand command)
     {
+        //_memoryCache.Remove("main-page");
         return await AjaxTryCatch(() => _sellerService.EditInventory(command));
     }
 }
