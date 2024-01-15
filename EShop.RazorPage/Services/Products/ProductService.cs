@@ -122,5 +122,11 @@ public class ProductService : IProductService
         var result = await _client.GetFromJsonAsync<ApiResult<ProductShopResult>>(url);
         return result?.Data;
     }
+
+    public async Task<SingleProductDto?> GetSingleProduct(string slug)
+    {
+        var result = await _client.GetFromJsonAsync<ApiResult<SingleProductDto?>>($"{ModuleName}/single/{slug}");
+        return result?.Data;
+    }
 }
 
