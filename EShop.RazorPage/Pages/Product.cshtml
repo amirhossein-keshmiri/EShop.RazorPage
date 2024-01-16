@@ -4,6 +4,10 @@
 @{
     var inventory = Model.ProductPageModel.Inventories.OrderBy(b => b.TotalPrice).FirstOrDefault();
     var productId = Model.ProductPageModel.ProductDto.Id;
+    var title = Model.ProductPageModel.ProductDto.SeoData.MetaTitle;
+    if (string.IsNullOrWhiteSpace(title))
+        title = Model.ProductPageModel.ProductDto.Title;
+    ViewData["Title"] = title;
 }
 <input type="hidden" id="productId" value="@Model.ProductPageModel.ProductDto.Id" />
 <div class="row mb-1">
@@ -294,7 +298,7 @@
                 <div class="tab-pane fade" id="productComments" role="tabpanel"
                      aria-labelledby="productComments-tab">
                     <!-- product-review -->
-                    <div class="product-review-form mb-3">
+                    <div class="product-review-form mb-3" id="commentScroll">
                          @if (Model.User.Identity.IsAuthenticated)
                         {
                             <form method="post">
@@ -352,15 +356,15 @@
             });
         })
 
-        //function changeCommentPage(pageId) {
-        //    var productId = $("#productId").val();
-        //    $.ajax({
-        //        url: `/product/slug/ProductComments?productId=${productId}&pageId=${pageId}`,
-        //        type: "get"
-        //    }).done(function (data) {
-        //        $("#comments").html(data);
-        //    });
-        //}
+        function changeCommentPage(pageId) {
+            var productId = $("#productId").val();
+            $.ajax({
+                url: `/product/slug/ProductComments?productId=${productId}&pageId=${pageId}`,
+                type: "get"
+            }).done(function (data) {
+                $("#comments").html(data);
+            });
+        }
 
     </script>
 }

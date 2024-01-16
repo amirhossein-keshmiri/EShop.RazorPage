@@ -30,7 +30,7 @@ public class ProductModel : BaseRazorPage
 
     public async Task<IActionResult> OnGetProductComments(long productId, int pageId = 1)
     {
-        var commentResult = await _commentService.GetProductComments(pageId, 14, productId);
+        var commentResult = await _commentService.GetProductComments(pageId, 10, productId);
         return Partial("Shared/Products/_Comments", commentResult);
     }
 
@@ -52,6 +52,11 @@ public class ProductModel : BaseRazorPage
         }
         SuccessAlert("نظر شما ثبت شد ، بعد از تایید در سایت نمایش داده می شود");
         return RedirectToPage("Product", new { slug });
+    }
+
+    public async Task<IActionResult> OnPostDeleteComment(long id)
+    {
+        return await AjaxTryCatch(() => _commentService.DeleteComment(id));
     }
 }
 
