@@ -61,5 +61,12 @@ public class CommentService : ICommentService
         var result = await _client.GetFromJsonAsync<ApiResult<CommentFilterResult>>(url);
         return result?.Data;
     }
+
+    public async Task<CommentFilterResult> GetProductComments(int pageId, int take, long productId)
+    {
+        var url = $"comment/productComments?pageId={pageId}&take={take}&productId={productId}";
+        var result = await _client.GetFromJsonAsync<ApiResult<CommentFilterResult>>(url);
+        return result?.Data;
+    }
 }
 

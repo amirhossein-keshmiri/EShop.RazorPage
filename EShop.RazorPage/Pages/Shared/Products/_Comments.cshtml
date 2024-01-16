@@ -1,0 +1,21 @@
+﻿@model EShop.RazorPage.Models.Comments.CommentFilterResult
+
+<div class="comments-list">
+    @foreach(var item in Model.Data)
+    {
+        <div class="article">
+            <div class="header">
+                <div>@item.UserFullName</div>
+            </div>
+            <p>
+                @item.Text
+            </p>
+            <div class="footer">
+                <div class="comments-likes">
+                    <delete-item url="/product/slug/deleteComment?id=@item.Id" class="btn-like">حذف</delete-item>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

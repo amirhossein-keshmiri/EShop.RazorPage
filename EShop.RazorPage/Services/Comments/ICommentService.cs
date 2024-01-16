@@ -10,6 +10,7 @@ public interface ICommentService
     Task<ApiResult> DeleteComment(long commentId);
 
     Task<CommentFilterResult> GetCommentsByFilter(CommentFilterParams filterParams);
+    Task<CommentFilterResult> GetProductComments(int pageId, int take, long productId);
     Task<CommentDto?> GetCommentById(long id);
 }
 
