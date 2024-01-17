@@ -17,6 +17,7 @@ public class CommentDto : BaseDto
     public string UserFullName { get; set; }
     public string ProductTitle { get; set; }
     public string Text { get; set; }
-    public int Status { get; set; }
+    //public int Status { get; set; }
+    public CommentStatus Status { get; set; }
 }
 

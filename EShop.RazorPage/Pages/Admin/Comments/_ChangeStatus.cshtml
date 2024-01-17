@@ -1,0 +1,15 @@
+﻿@model EShop.RazorPage.Models.Comments.ChangeStatusCommand
+
+<form method="post" data-ajax="true"
+      asp-page="Index" asp-page-handler="ChangeCommentStatus">
+    <div class="row">
+        @Html.HiddenFor(f=>f.CommentId)
+
+        <div class="col-lg-6 mb-3">
+            @Html.EditorFor(f=>f.Status)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        ذخیره تغییرات
+    </button>
+</form>

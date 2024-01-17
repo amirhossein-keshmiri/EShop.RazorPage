@@ -1,0 +1,129 @@
+﻿@page "{handler?}"
+@using EShop.RazorPage.Infrastructure.Utils;
+@using EShop.RazorPage.Models.Comments;
+@model EShop.RazorPage.Pages.Admin.Comments.IndexModel
+@{
+}
+<form class="card shadow-lg " method="get">
+    <div class="card-header text-left">
+        <a asp-page="Index" class="btn btn-danger btn-sm">حذف فیلتر</a>
+        <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>شناسه کاربر</label>
+                <input type="number" name="userId" id="userId" class="form-control" 
+                value="@Model.FilterParams.UserId" />
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label> وضعیت کامنت</label>
+                    <select class="form-control" name="commentStatus" id="commentStatus">
+                        <option>انتخاب وضعیت</option>
+                        @foreach (var item in Enum.GetNames(typeof(CommentStatus)))
+                        {
+                            <option value="@item" selected="@(item==Model.CommentResult.FilterParams.CommentStatus.ToString()?"selected":null)">@item</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            @*<div class="col-md-4">
+                <label>از تاریخ</label>
+                <input type="text" name="startDate" id="startDate" class="form-control" />
+            </div>*@
+        </div>
+    </div>
+</form>
+<div id="commentScroll"></div>
+<div class="card">
+    <div class="card-body table-responsive p-0">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>شناسه</th>
+                    <th>کاربر</th>
+                    <th>محصول</th>
+                    <th>متن </th>
+                    <th>وضعیت </th>
+                    <th>تاریخ ثبت </th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CommentResult.Data)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.UserFullName</td>
+                        <td>@item.ProductTitle</td>
+                        <td>@item.Text</td>
+                        <td>@Enum.GetName(typeof(CommentStatus), (int)item.Status)</td>
+                        <td>@item.CreationDate.ToPersianDate()</td>
+                        <td>
+                            <open-modal modal-title="تغییر وضعیت"
+                                        class="btn btn-warning btn-sm"
+                                        url="@Url.Page("Index", "RenderChangeStatusPage", new {commentId = item.Id})">
+                                ویرایش
+                            </open-modal>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.CommentResult.Data.Any() == false)
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">موردی برای نمایش وجود ندارد</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-success justify-content-center mt-2">
+            @if (Model.CommentResult.CurrentPage > 1)
+            {
+                <li class="page-item previous">
+                    <a class="page-link" href="#commentScroll" onclick="changePageId('@(Model.CommentResult.CurrentPage-1)')">
+                        <i class="bx bx-chevron-right"></i>
+                    </a>
+                </li>
+            }
+        
+            @for (var i = Model.CommentResult.StartPage; i <= Model.CommentResult.EndPage; i++)
+            {
+                @if (i == Model.CommentResult.CurrentPage)
+                {
+                    <li class="page-item active" aria-current="page"><a class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="#commentScroll" onclick="changePageId('@i')">@i</a></li>
+                }
+            }
+            @if (Model.CommentResult.CurrentPage < Model.CommentResult.PageCount)
+            {
+                <li class="page-item next">
+                    <a class="page-link" href="#commentScroll"
+                       onclick="changePageId('@(Model.CommentResult.CurrentPage+1)')">
+                        <i class="bx bx-chevron-left"></i>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>
+@section Scripts {
+    <script>
+        function changePageId(pageId) {
+            var url = new URL(window.location.href);
+            var search_params = url.searchParams;
+            search_params.set('pageId', pageId);
+            url.search = search_params.toString();
+            var new_url = url.toString();
+            window.location.replace(new_url);
+        }
+    </script>
+}
