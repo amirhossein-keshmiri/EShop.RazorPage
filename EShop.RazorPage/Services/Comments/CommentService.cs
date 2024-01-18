@@ -53,12 +53,13 @@ public class CommentService : ICommentService
             url += $"&CommentStatus={filterParams.CommentStatus}";
 
         if (filterParams.StartDate != null)
-            url += $"&StartDate{filterParams.StartDate}";
+            url += $"&StartDate={filterParams.StartDate}";
 
         if (filterParams.EndDate != null)
-            url += $"&EndDate{filterParams.EndDate}";
+            url += $"&EndDate={filterParams.EndDate}";
 
         var result = await _client.GetFromJsonAsync<ApiResult<CommentFilterResult>>(url);
+        
         return result?.Data;
     }
 

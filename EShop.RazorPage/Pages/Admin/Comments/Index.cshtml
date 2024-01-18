@@ -30,10 +30,14 @@
                     </select>
                 </div>
             </div>
-            @*<div class="col-md-4">
+            <div class="col-md-4">
                 <label>از تاریخ</label>
-                <input type="text" name="startDate" id="startDate" class="form-control" />
-            </div>*@
+                <input type="text" name="startDate" class="form-control" value="@Model.FilterParams.StartDate.ToPersianDate()" />
+            </div>
+            <div class="col-md-4">
+                <label>تا تاریخ</label>
+                <input type="text" name="endDate" class="form-control" value="@Model.FilterParams.EndDate.ToPersianDate()" />
+            </div>
         </div>
     </div>
 </form>

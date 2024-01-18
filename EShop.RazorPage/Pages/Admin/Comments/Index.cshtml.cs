@@ -1,4 +1,5 @@
 using EShop.RazorPage.Infrastructure.RazorUtils;
+using EShop.RazorPage.Infrastructure.Utils;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Comments;
 using EShop.RazorPage.Services.Comments;
@@ -18,15 +19,23 @@ public class IndexModel : BaseRazorFilter<CommentFilterParams>
     }
 
     public CommentFilterResult CommentResult { get; set; }
-    public async Task OnGet(int pageId = 1, DateTime? startDate = null,
-        DateTime? endDate = null, CommentStatus? commentStatus = null, int? userId = null)
+    public async Task OnGet(int pageId = 1, string? startDate = null,
+        string? endDate = null, CommentStatus? commentStatus = null, int? userId = null)
     {
+        if (string.IsNullOrWhiteSpace(startDate) == false)
+        {
+            FilterParams.StartDate = startDate.ToMiladi();
+        }
+        if (string.IsNullOrWhiteSpace(endDate) == false)
+        {
+            FilterParams.EndDate = endDate.ToMiladi();
+        }
         CommentResult = await _commentService.GetCommentsByFilter(new CommentFilterParams()
         {
             Take = 1,
             PageId = pageId,
-            StartDate = startDate,
-            EndDate = endDate,
+            StartDate = FilterParams.StartDate,
+            EndDate = FilterParams.EndDate,
             CommentStatus = commentStatus,
             UserId = userId
         });
