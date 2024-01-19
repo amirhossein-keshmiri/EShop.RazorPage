@@ -1,6 +1,8 @@
 ﻿@page "{handler?}"
 @using EShop.RazorPage.Infrastructure;
 @using EShop.RazorPage.Infrastructure.Utils;
+@using EShop.RazorPage.Services.Sellers;
+@inject ISellerService _sellerService
 @model EShop.RazorPage.Pages.Admin.Users.IndexModel
 @{
     ViewData["title"] = "مدیریت کاربران";
@@ -70,6 +72,11 @@
                             </open-modal>
                             <a class="btn btn-sm btn-primary" asp-page="SetUserRoles" asp-route-userId="@item.Id">نقش</a>
 
+                            <open-modal modal-title="افزودن فروشنده"
+                                        class="btn btn-success btn-sm"
+                                        url="@Url.Page("Index", "RenderCreateSellerPage", new {userId = item.Id})">
+                                افزودن فروشنده
+                            </open-modal>
                            @* <open-modal modal-title="نقش"
                                         class="btn btn-primary btn-sm"
                                         url="@Url.Page("Index", "renderRolePage", new {userId = item.Id})">

@@ -52,7 +52,7 @@ public class SellerService : ISellerService
     public async Task<SellerFilterResult> GetSellersByFilter(SellerFilterParams filterParams)
     {
         var url = filterParams.GenerateBaseFilterUrl(ModuleName) +
-          $"&NationalCode={filterParams.NationalCode}&ShopName={filterParams.ShopName}";
+          $"&NationalCode={filterParams.NationalCode}&ShopName={filterParams.ShopName}&Status={filterParams.Status}";
 
         var result = await _client.GetFromJsonAsync<ApiResult<SellerFilterResult>>(url);
         return result.Data;

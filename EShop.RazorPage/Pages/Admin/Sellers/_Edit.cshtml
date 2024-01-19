@@ -1,0 +1,20 @@
+﻿@model EShop.RazorPage.Models.Sellers.Commands.EditSellerCommand
+<form method="post" data-ajax="true"
+      asp-page="Index" asp-page-handler="EditSeller">
+    <div class="row">
+        @Html.HiddenFor(f=>f.Id)
+
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.ShopName)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.NationalCode)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.Status)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-warning">
+        ویرایش فروشنده
+    </button>
+</form>

@@ -1,0 +1,18 @@
+﻿@model EShop.RazorPage.Models.Sellers.Commands.CreateSellerCommand
+@{
+}
+<form method="post" data-ajax="true"
+      asp-page="Index" asp-page-handler="CreateSeller">
+    <div class="row">
+        @Html.HiddenFor(f=>f.UserId)
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.ShopName)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f=>f.NationalCode)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        ذخیره بعنوان فروشنده
+    </button>
+</form>

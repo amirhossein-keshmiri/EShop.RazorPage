@@ -1,9 +1,11 @@
 using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Roles;
+using EShop.RazorPage.Models.Sellers.Commands;
 using EShop.RazorPage.Models.Users;
 using EShop.RazorPage.Models.Users.Commands;
 using EShop.RazorPage.Services.Roles;
+using EShop.RazorPage.Services.Sellers;
 using EShop.RazorPage.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,14 +14,16 @@ public class IndexModel : BaseRazorFilter<UserFilterParams>
 {
     private readonly IUserService _userService;
     private readonly IRoleService _roleService;
+    private readonly ISellerService _sellerService;
     private readonly IRenderViewToString _renderView;
 
-    public IndexModel(IUserService userService, IRenderViewToString renderView, 
-        IRoleService roleService)
+    public IndexModel(IUserService userService, IRenderViewToString renderView,
+        IRoleService roleService, ISellerService sellerService)
     {
         _userService = userService;
         _renderView = renderView;
         _roleService = roleService;
+        _sellerService = sellerService;
     }
 
     public List<RoleDto> Roles { get; set; }
@@ -80,6 +84,38 @@ public class IndexModel : BaseRazorFilter<UserFilterParams>
                 Name = command.Name,
                 Avatar = command.Avatar
             }));
+    }
+
+    public async Task<IActionResult> OnGetRenderCreateSellerPage(long userId)
+    {
+        return await AjaxTryCatch(async () =>
+        {
+            var user = await _userService.GetUserById(userId);
+            if (user == null)
+                return ApiResult<string>.Error();
+
+            var model = new CreateSellerCommand()
+            {
+                UserId = user.Id,
+                NationalCode = "",
+                ShopName = ""
+
+            };
+            var view = await _renderView.RenderToStringAsync("_AddSeller", model, PageContext);
+            return ApiResult<string>.Success(view);
+        });
+    }
+
+    public async Task<IActionResult> OnPostCreateSeller(CreateSellerCommand command)
+    {
+        return await AjaxTryCatch(() =>
+            _sellerService.CreateSeller(new CreateSellerCommand()
+            {
+                UserId = command.UserId,
+                ShopName= command.ShopName,
+                NationalCode = command.NationalCode
+            }));
+
     }
 
     //public async Task<IActionResult> OnGetRenderRolePage(long userId)

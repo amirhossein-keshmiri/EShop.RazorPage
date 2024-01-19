@@ -1,0 +1,133 @@
+﻿@page "{handler?}"
+@using EShop.RazorPage.Infrastructure.Utils;
+@using EShop.RazorPage.Models.Sellers;
+@model EShop.RazorPage.Pages.Admin.Sellers.IndexModel
+@{
+    ViewData["title"] = "مدیریت فروشندگان";
+    ViewData["selected"] = "sellers";
+}
+<form class="card shadow-lg " method="get">
+    <div class="card-header text-left">
+        <a asp-page="Index" class="btn btn-danger btn-sm">حذف فیلتر</a>
+        <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>نام فروشگاه </label>
+                <input type="text" asp-for="FilterParams.ShopName" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>کدملی فروشنده </label>
+                <input type="text" asp-for="FilterParams.NationalCode" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label> وضعیت فروشنده</label>
+                    <select class="form-control" asp-for="FilterParams.Status">
+                        <option>انتخاب وضعیت</option>
+                        @foreach (var item in Enum.GetNames(typeof(SellerStatus)))
+                        {
+                            <option value="@item" selected="@(item==Model.FilterResult.FilterParams.Status.ToString()?"selected":null)">@item</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div id="sellerScroll"></div>
+<div class="card">
+    <div class="card-body table-responsive p-0">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>شناسه کاربر</th>
+                    <th>اسم فروشگاه</th>
+                    <th>کدملی</th>
+                    <th>تاریخ ثبت</th>
+                    <th>وضعیت فروشگاه </th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FilterResult.Data)
+                {
+                    <tr>
+                        <td>
+                          @item.Id
+                        </td>
+                        <td>@item.UserId</td>
+                        <td>@item.ShopName</td>
+                        <td>@item.NationalCode</td>
+                        <td>@item.CreationDate.ToPersianDate()</td>
+                        <td>@item.Status</td>
+                        <td>
+                            <open-modal modal-title="ویرایش"
+                                        class="btn btn-warning btn-sm"
+                                        url="@Url.Page("Index", "RenderEditPage", new {sellerId = item.Id})">
+                                ویرایش
+                            </open-modal>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.FilterResult.Data.Any() == false)
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">موردی برای نمایش وجود ندارد</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-success justify-content-center mt-2">
+            @if (Model.FilterResult.CurrentPage > 1)
+            {
+                <li class="page-item previous">
+                    <a class="page-link" href="#sellerScroll" onclick="changePageId('@(Model.FilterResult.CurrentPage-1)')">
+                        <i class="bx bx-chevron-right"></i>
+                    </a>
+                </li>
+            }
+
+            @for (var i = Model.FilterResult.StartPage; i <= Model.FilterResult.EndPage; i++)
+            {
+                @if (i == Model.FilterResult.CurrentPage)
+                {
+                    <li class="page-item active" aria-current="page"><a class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="#sellerScroll" onclick="changePageId('@i')">@i</a></li>
+                }
+            }
+            @if (Model.FilterResult.CurrentPage < Model.FilterResult.PageCount)
+            {
+                <li class="page-item next">
+                    <a class="page-link" href="#sellerScroll"
+                       onclick="changePageId('@(Model.FilterResult.CurrentPage+1)')">
+                        <i class="bx bx-chevron-left"></i>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>
+
+@section Scripts {
+    <script>
+        function changePageId(pageId) {
+            var url = new URL(window.location.href);
+            var search_params = url.searchParams;
+            search_params.set('pageId', pageId);
+            url.search = search_params.toString();
+            var new_url = url.toString();
+            window.location.replace(new_url);
+        }
+    </script>
+}
