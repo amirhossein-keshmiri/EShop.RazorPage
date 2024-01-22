@@ -20,7 +20,8 @@ public class IndexModel : BaseRazorFilter<CommentFilterParams>
 
     public CommentFilterResult CommentResult { get; set; }
     public async Task OnGet(int pageId = 1, string? startDate = null,
-        string? endDate = null, CommentStatus? commentStatus = null, int? userId = null)
+        string? endDate = null, CommentStatus? commentStatus = null, int? userId = null,
+        string? userFullName = "" , string? productTitle = "")
     {
         if (string.IsNullOrWhiteSpace(startDate) == false)
         {
@@ -34,6 +35,8 @@ public class IndexModel : BaseRazorFilter<CommentFilterParams>
         {
             Take = 1,
             PageId = pageId,
+            UserFullName = userFullName,
+            ProductTitle = productTitle,
             StartDate = FilterParams.StartDate,
             EndDate = FilterParams.EndDate,
             CommentStatus = commentStatus,

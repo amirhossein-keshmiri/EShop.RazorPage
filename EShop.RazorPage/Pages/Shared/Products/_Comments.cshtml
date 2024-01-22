@@ -1,20 +1,28 @@
-﻿@model EShop.RazorPage.Models.Comments.CommentFilterResult
+﻿@using EShop.RazorPage.Infrastructure;
+@model EShop.RazorPage.Models.Comments.CommentFilterResult
 
 <div class="comments-list">
     @foreach (var item in Model.Data)
     {
         <div class="article">
             <div class="header">
-                <div>@item.UserFullName</div>
+                <div>@item.Name @item.Family</div>
             </div>
             <p>
                 @item.Text
             </p>
-            <div class="footer">
-                <div class="comments-likes">
-                    <delete-item url="/product/slug/deleteComment?id=@item.Id" class="btn-like">حذف</delete-item>
-                </div>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.GetUserId() == item.UserId)
+                {
+                    <div class="footer">
+                        <div class="comments-likes">
+                            <delete-item url="/product/slug/deleteComment?id=@item.Id" class="btn-like">حذف</delete-item>
+                        </div>
+                    </div>
+                }
+            }
+
         </div>
     }
 

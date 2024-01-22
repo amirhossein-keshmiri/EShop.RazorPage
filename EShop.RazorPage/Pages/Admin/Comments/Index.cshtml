@@ -14,9 +14,14 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <label>شناسه کاربر</label>
-                <input type="number" name="userId" id="userId" class="form-control" 
-                value="@Model.FilterParams.UserId" />
+                <label>نام کاربر</label>
+                <input type="text" name="userFullName" id="userFullName" class="form-control"
+                       value="@Model.FilterParams.UserFullName" />
+            </div>
+            <div class="col-md-4">
+                <label>نام کالا</label>
+                <input type="text" name="productTitle" id="productTitle" class="form-control"
+                       value="@Model.FilterParams.ProductTitle" />
             </div>
             <div class="col-md-4">
                 <div class="form-group">
@@ -61,7 +66,7 @@
                 {
                     <tr>
                         <td>@item.Id</td>
-                        <td>@item.UserFullName</td>
+                        <td>@item.Name @item.Family</td>
                         <td>@item.ProductTitle</td>
                         <td>@item.Text</td>
                         <td>@Enum.GetName(typeof(CommentStatus), (int)item.Status)</td>

@@ -49,6 +49,12 @@ public class CommentService : ICommentService
         if (filterParams.UserId != null)
             url += $"&UserId={filterParams.UserId}";
 
+        if (filterParams.UserFullName != null)
+            url += $"&userFullName={filterParams.UserFullName}";
+
+        if (filterParams.ProductTitle != null)
+            url += $"&productTitle={filterParams.ProductTitle}";
+
         if (filterParams.CommentStatus != null)
             url += $"&CommentStatus={filterParams.CommentStatus}";
 
