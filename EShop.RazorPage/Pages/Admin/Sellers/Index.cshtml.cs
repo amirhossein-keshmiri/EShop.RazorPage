@@ -2,7 +2,6 @@ using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Sellers;
 using EShop.RazorPage.Models.Sellers.Commands;
-using EShop.RazorPage.Models.Users.Commands;
 using EShop.RazorPage.Services.Sellers;
 using Microsoft.AspNetCore.Mvc;
 
