@@ -1,4 +1,5 @@
 using EShop.RazorPage.Infrastructure;
+using EShop.RazorPage.Infrastructure.CookieUtils;
 using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Models;
 using EShop.RazorPage.Models.Orders;
@@ -11,10 +12,11 @@ namespace EShop.RazorPage.Pages;
 public class ShopCartModel : BaseRazorPage
 {
     private readonly IOrderService _orderService;
-
-    public ShopCartModel(IOrderService orderService)
+    private readonly ShopCartCookieManager _shopCartCookieManager;
+    public ShopCartModel(IOrderService orderService, ShopCartCookieManager shopCartCookieManager)
     {
         _orderService = orderService;
+        _shopCartCookieManager = shopCartCookieManager;
     }
 
     public OrderDto? OrderDto { get; set; }
@@ -26,7 +28,7 @@ public class ShopCartModel : BaseRazorPage
         }
         else
         {
-            //cookie
+            OrderDto = _shopCartCookieManager.GetShopCart();
         }
     }
 
@@ -41,8 +43,11 @@ public class ShopCartModel : BaseRazorPage
         }
         else
         {
-            //cookie
-            return Page();
+            return await AjaxTryCatch(async () =>
+            {
+                _shopCartCookieManager.DeleteOrderItem(id);
+                return ApiResult.Success();
+            });
         }
     }
     public async Task<IActionResult> OnPostAddItem(long inventoryId, int count)
@@ -58,8 +63,7 @@ public class ShopCartModel : BaseRazorPage
         }
         else
         {
-            //cookie
-            return Page();
+            return await AjaxTryCatch(() => _shopCartCookieManager.AddItem(inventoryId, count));
         }
     }
     public async Task<IActionResult> OnPostIncreaseItemCount(long id)
@@ -76,7 +80,11 @@ public class ShopCartModel : BaseRazorPage
         }
         else
         {
-            return Page();
+            return await AjaxTryCatch(async () =>
+            {
+                _shopCartCookieManager.Increase(id);
+                return ApiResult.Success();
+            });
         }
     }
     public async Task<IActionResult> OnPostDecreaseItemCount(long id)
@@ -92,7 +100,11 @@ public class ShopCartModel : BaseRazorPage
         }
         else
         {
-            return Page();
+            return await AjaxTryCatch(async () =>
+            {
+                _shopCartCookieManager.Decrease(id);
+                return ApiResult.Success();
+            });
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EShop.RazorPage.Infrastructure.RazorUtils;
+﻿using EShop.RazorPage.Infrastructure.CookieUtils;
+using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Services.Auth;
 using EShop.RazorPage.Services.Banners;
 using EShop.RazorPage.Services.Categories;
@@ -26,6 +27,10 @@ public static class RegisterDependencyServices
 
         services.AddAutoMapper(typeof(RegisterDependencyServices).Assembly);
         services.AddScoped<IMainPageService, MainPageService>();
+
+        services.AddScoped<ShopCartCookieManager>();
+
+        services.AddCookieManager();
 
         services.AddHttpClient<IAuthService, AuthService>(httpClient =>
         {

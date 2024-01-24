@@ -1,5 +1,5 @@
 ﻿namespace EShop.RazorPage.Models.Orders;
-public class OrderDto
+public class OrderDto : BaseDto
 {
     public long UserId { get; set; }
     public string UserFullName { get; set; }
