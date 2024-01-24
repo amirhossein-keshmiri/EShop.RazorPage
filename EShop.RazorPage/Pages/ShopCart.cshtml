@@ -61,9 +61,9 @@ else
                                             <div class="item-quantity">
                                                 <div class="num-block">
                                                     <div class="num-in">
-                                                        <span class="plus"></span>
+                                                        <span class="plus" onclick="plus('@item.Id')"></span>
                                                         <input type="text" class="in-num" value="@item.Count" readonly>
-                                                        <span class="minus dis"></span>
+                                                        <span onclick="minus('@item.Id')" class="minus @(item.Count==1?"dis":null)"></span>
                                                     </div>
                                                 </div>
                                                 <delete-item class="item-remove-btn mr-3" url="@Url.Page("ShopCart","DeleteItem",new {id=item.Id})">
@@ -122,3 +122,34 @@ else
         </div>
     </div>
 }
+@section Scripts
+    {
+    <script>
+        var token = $("#ajax-token input[name='__RequestVerificationToken']").val();
+
+        function plus(id) {
+            $.ajax({
+                url: "/shopcart/IncreaseItemCount?id=" + id,
+                type: "post",
+                data: {
+                    __RequestVerificationToken: token
+                },
+            }).done(function (data) {
+                var res = JSON.parse(data);
+                CallBackHandler(res);
+            });
+        }
+        function minus(id) {
+            $.ajax({
+                url: "/shopcart/DecreaseItemCount?id=" + id,
+                type: "post",
+                data: {
+                    __RequestVerificationToken: token
+                },
+            }).done(function (data) {
+                var res = JSON.parse(data);
+                CallBackHandler(res);
+            });
+        }
+    </script>
+                    }

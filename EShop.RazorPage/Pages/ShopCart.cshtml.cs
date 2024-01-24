@@ -62,5 +62,38 @@ public class ShopCartModel : BaseRazorPage
             return Page();
         }
     }
+    public async Task<IActionResult> OnPostIncreaseItemCount(long id)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            return await AjaxTryCatch(() => _orderService.IncreaseOrderItem(new IncreaseOrderItemCountCommand()
+            {
+                Count = 1,
+                UserId = User.GetUserId(),
+                ItemId = id
+
+            }));
+        }
+        else
+        {
+            return Page();
+        }
+    }
+    public async Task<IActionResult> OnPostDecreaseItemCount(long id)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            return await AjaxTryCatch(() => _orderService.DecreaseOrderItem(new DecreaseOrderItemCountCommand()
+            {
+                Count = 1,
+                UserId = User.GetUserId(),
+                ItemId = id
+            }));
+        }
+        else
+        {
+            return Page();
+        }
+    }
 }
 
