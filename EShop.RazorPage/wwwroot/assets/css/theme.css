@@ -1762,7 +1762,9 @@ header.page-header .bottom-page-header .user-items .user-item.cart-list > ul li 
 }
 
 header.page-header .bottom-page-header .user-items .user-item.cart-list > ul li.cart-items ul {
-  height: 250px;
+  /*height: 250px;*/
+  height: auto;
+  max-height: 202px;
 }
 
 header.page-header .bottom-page-header .user-items .user-item.cart-list > ul li.cart-items ul .cart-item {

@@ -1,4 +1,4 @@
-using EShop.RazorPage.Infrastructure;
+﻿using EShop.RazorPage.Infrastructure;
 using EShop.RazorPage.Infrastructure.CookieUtils;
 using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Models;
@@ -106,6 +106,25 @@ public class ShopCartModel : BaseRazorPage
                 return ApiResult.Success();
             });
         }
+    }
+    public async Task<IActionResult> OnGetShopCartDetail()
+    {
+        OrderDto? order = new();
+        if (User.Identity.IsAuthenticated)
+        {
+            order = await _orderService.GetCurrentOrder();
+        }
+        else
+        {
+            order = _shopCartCookieManager.GetShopCart();
+        }
+
+        return new ObjectResult(new
+        {
+            items = order?.Items,
+            count = order?.Items.Sum(s => s.Count),
+            price = $"{order?.Items.Sum(s => s.TotalPrice):#,0} تومان"
+        });
     }
 }
 

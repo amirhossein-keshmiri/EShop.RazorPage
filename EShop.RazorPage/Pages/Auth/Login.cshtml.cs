@@ -1,9 +1,13 @@
-﻿using EShop.RazorPage.Models.Auth;
+﻿using EShop.RazorPage.Infrastructure.CookieUtils;
+using EShop.RazorPage.Models.Auth;
+using EShop.RazorPage.Models.Orders.Command;
 using EShop.RazorPage.Services.Auth;
+using EShop.RazorPage.Services.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace EShop.RazorPage.Pages.Auth
 {
@@ -12,10 +16,14 @@ namespace EShop.RazorPage.Pages.Auth
     public class LoginModel : PageModel
     {
         private readonly IAuthService _authService;
+        private readonly ShopCartCookieManager _shopCartCookieManager;
+        private readonly IOrderService _orderService;
 
-        public LoginModel(IAuthService authService)
+        public LoginModel(IAuthService authService, ShopCartCookieManager shopCartCookieManager, IOrderService orderService)
         {
             _authService = authService;
+            _shopCartCookieManager = shopCartCookieManager;
+            _orderService = orderService;
         }
 
         [Display(Name = "شماره تلفن")]
@@ -65,12 +73,36 @@ namespace EShop.RazorPage.Pages.Auth
                 Expires = DateTimeOffset.Now.AddDays(10)
             });
 
+            await SyncShopCart(token);
+
             if (string.IsNullOrWhiteSpace(RedirectTo) == false)
             {
                 return LocalRedirect(RedirectTo);
             }
 
             return Redirect("/");
+        }
+        private async Task SyncShopCart(string token)
+        {
+            var shopCart = _shopCartCookieManager.GetShopCart();
+            if (shopCart == null || shopCart.Items.Any() == false)
+                return;
+
+            HttpContext.Request.Headers.Append("Authorization", $"Bearer {token}");
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(token);
+
+            var userId = Convert.ToInt64(jwtSecurityToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            foreach (var item in shopCart.Items)
+            {
+                await _orderService.AddOrderItem(new AddOrderItemCommand()
+                {
+                    Count = item.Count,
+                    UserId = userId,
+                    InventoryId = item.InventoryId
+                });
+            }
+            _shopCartCookieManager.DeleteShopCart();
         }
     }
 }

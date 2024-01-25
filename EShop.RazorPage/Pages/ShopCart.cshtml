@@ -116,7 +116,14 @@ else
             </span>
             </div>*@
                 <div class="d-flex px-3 py-4">
-                    <a href="/checkout" class="btn btn-danger btn-block py-2">ادامه فرایند خرید</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="/Checkout/Index" class="btn btn-danger btn-block py-2">ادامه فرایند خرید</a>
+                    }
+                    else
+                    {
+                        <a asp-page="/auth/login?RedirectTo=/checkout" class="btn btn-danger btn-block py-2">ادامه فرایند خرید</a>
+                    }
                 </div>
             </div>
         </div>
