@@ -52,11 +52,25 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item @(selected=="orders"?"active":null)">
-                <a href="/admin/orders">
-                    <i class="menu-livicon" data-icon="box"></i>
-                    <span class="menu-title" data-i18n="File Manager">مدیریت سفارشات</span>
+            <li class="nav-item ">
+                <a href="javascript:void(0)">
+                    <i class="menu-livicon" data-icon="Users"></i>
+                    <span class="menu-title" data-i18n="Dashboard">مدیریت سفارشات</span>
                 </a>
+                <ul class="menu-content">
+                    <li class="@(selected=="orders"?"active":null)">
+                        <a href="/admin/orders">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="eCommerce"> سفارشات </span>
+                        </a>
+                    </li>
+                    <li class="@(selected=="shippingmethods"?"active":null)">
+                        <a href="/admin/shippingmethods">
+                            <i class="bx bx-left-arrow-alt"></i>
+                            <span class="menu-item" data-i18n="Analytics">روش های ارسال</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item @(selected=="banners"?"active":null)">
                 <a href="/admin/banners">

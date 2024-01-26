@@ -1,0 +1,48 @@
+﻿@page "{handler?}"
+@model EShop.RazorPage.Pages.Admin.ShippingMethods.IndexModel
+@{
+    ViewData["title"] = "مدیریت روش های ارسال";
+    ViewData["selected"] = "shippingmethods";
+}
+<h3>@ViewData["title"]</h3>
+<open-modal modal-title="افزودن روش ارسال"
+            url="@Url.Page("Index","renderAddPage")">افزودن روش ارسال</open-modal>
+<div class="table-responsive card card-body p-0">
+    <table class="table table-bordered mb-0">
+        <thead>
+            <tr>
+                <th>روش ارسال</th>
+                <th>هزینه</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ShippingMethods)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>@item.Cost.ToString("#,0") تومان</td>
+                    <td>
+                        <open-modal modal-title="ویرایش"
+                                    class="btn btn-warning btn-sm"
+                                    url="@Url.Page("Index", "renderEditPage", new {id = item.Id})">
+                            ویرایش
+                        </open-modal>
+
+                        <delete-item url="@Url.Page("Index", "Delete", new {id = item.Id})">
+                            حذف
+                        </delete-item>
+                    </td>
+                </tr>
+            }
+            @if (Model.ShippingMethods.Any() == false)
+            {
+                <tr>
+                    <td colspan="3" class="text-center">موردی برای نمایش وجود ندارد</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

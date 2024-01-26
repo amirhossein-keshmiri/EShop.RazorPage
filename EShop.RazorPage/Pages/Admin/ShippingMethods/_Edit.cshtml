@@ -1,0 +1,17 @@
+﻿@model EShop.RazorPage.Models.ShippingMethods.Commands.EditShippingMethodCommand
+<form method="post" data-ajax="true"
+      asp-page="Index" asp-page-handler="EditShippingMethod">
+    <div class="row">
+        @Html.HiddenFor(f=>f.Id)
+
+        <div class="col-md-6">
+            @Html.EditorFor(f => f.Title)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(f => f.Cost)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-warning">
+        ذخیره تغییرات
+    </button>
+</form>
