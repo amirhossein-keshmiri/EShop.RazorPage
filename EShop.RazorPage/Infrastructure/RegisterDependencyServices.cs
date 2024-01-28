@@ -11,6 +11,7 @@ using EShop.RazorPage.Services.Roles;
 using EShop.RazorPage.Services.Sellers;
 using EShop.RazorPage.Services.ShippingMethods;
 using EShop.RazorPage.Services.Sliders;
+using EShop.RazorPage.Services.Transactions;
 using EShop.RazorPage.Services.UserAddresses;
 using EShop.RazorPage.Services.Users;
 
@@ -92,6 +93,12 @@ public static class RegisterDependencyServices
         {
             httpClient.BaseAddress = new Uri(baseAddress);
         }).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<ITransactionService, TransactionService>(httpClient =>
+        {
+            httpClient.BaseAddress = new Uri(baseAddress);
+        }).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
 
         return services;
     }

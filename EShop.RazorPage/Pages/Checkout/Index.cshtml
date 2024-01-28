@@ -168,7 +168,10 @@
                 </span>
             </div>
             <div class="d-flex px-3 py-4">
-                <a href="#" class="btn btn-danger btn-block py-2">پرداخت و ثبت نهایی سفارش</a>
+                <a href="javascript:void(0)" onclick="submitPage()" class="btn btn-danger btn-block py-2">پرداخت و ثبت نهایی سفارش</a>
+                <form method="post" id="checkoutForm">
+                    <input type="hidden" name="shippingMethodId" id="shippingMethodId" />
+                </form>
             </div>
         </div>
     </div>
@@ -182,6 +185,10 @@
             $("#shippingMethod_Label").html(splitNumber(price));
             $("#totalPrice").html(splitNumber(totalPrice));
         }
-
+        function submitPage() {
+            var shippingId = $("input[name='shippingMethod']:checked").val();
+            $("#shippingMethodId").val(shippingId);
+            $("#checkoutForm").submit();
+        }
     </script>
     }
