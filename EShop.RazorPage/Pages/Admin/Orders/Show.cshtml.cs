@@ -1,3 +1,4 @@
+using EShop.RazorPage.Infrastructure.RazorUtils;
 using EShop.RazorPage.Models.Orders;
 using EShop.RazorPage.Services.Orders;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EShop.RazorPage.Pages.Admin.Orders;
 
-public class ShowModel : PageModel
+public class ShowModel : BaseRazorPage
 {
     private IOrderService _orderService;
 
@@ -23,6 +24,12 @@ public class ShowModel : PageModel
 
         Order = order;
         return Page();
+    }
+
+    public async Task<IActionResult> OnPost(long id)
+    {
+        var result = await _orderService.SendOrder(id);
+        return RedirectAndShowAlert(result, RedirectToPage("Show", new { id }));
     }
 }
 

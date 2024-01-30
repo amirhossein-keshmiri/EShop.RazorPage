@@ -41,6 +41,11 @@ public class OrderService : IOrderService
         var result = await _client.DeleteAsync($"order/orderItem/{command.OrderItemId}");
         return await result.Content.ReadFromJsonAsync<ApiResult>();
     }
+    public async Task<ApiResult> SendOrder(long orderId)
+    {
+        var result = await _client.PutAsync($"order/sendOrder/{orderId}", null);
+        return await result.Content.ReadFromJsonAsync<ApiResult>();
+    }
 
     public async Task<OrderDto?> GetCurrentOrder()
     {
