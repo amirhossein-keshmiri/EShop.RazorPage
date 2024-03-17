@@ -12,6 +12,7 @@ The Source Code of the ASP.NET Core E-Commerce Razor Page
 * Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation `v6.0.25`
 * Newtonsoft.Json `v13.0.3`
 * System.Drawing.Common `v8.0.0`
+* HtmlSanitizer `v8.0.811`
 
 ## Getting Started
 To run the application:
